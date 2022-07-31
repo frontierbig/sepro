@@ -1,15 +1,28 @@
 package entity
- 
+
 import (
-  "time"
-  "gorm.io/gorm"
+	"time"
+
+	"gorm.io/gorm"
 )
- 
+
 type User struct {
-  gorm.Model
-  FirstName    string
-  LastName     string
-  Email        string
-  Age          uint8
-  BirthDay     time.Time
+	gorm.Model
+	Name     string
+	Email    string
+	Password string
+	Tel      string
+	Gender   string
+	Brithday time.Time
+
+	// Facility []Facility `gorm:"foreignKey:UserID"`
+
+	RoleID *uint
+	Role   Role
+}
+
+type Role struct {
+	gorm.Model
+	Name string
+	User []User `gorm:"foreignKey:RoleID"`
 }

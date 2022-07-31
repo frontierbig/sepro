@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/frontierbig/SEPRO/service"
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,18 +26,18 @@ func Authorizes() gin.HandlerFunc {
 			return
 		}
 
-		// jwtWrapper := service.JwtWrapper{
-		// 	SecretKey: "SvNQpBN8y3qlVrsGAYYWoJJk56LtzFHx",
-		// 	Issuer:    "AuthService",
-		// }
+		jwtWrapper := service.JwtWrapper{
+			SecretKey: "SvNQpBN8y3qlVrsGAYYWoJJk56LtzFHx",
+			Issuer:    "AuthService",
+		}
 
-		// claims, err := jwtWrapper.ValidateToken(clientToken)
-		// if err != nil {
-		// 	c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
-		// 	return
-		// }
+		claims, err := jwtWrapper.ValidateToken(clientToken)
+		if err != nil {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
+			return
+		}
 
-		// c.Set("email", claims.Email)
+		c.Set("email", claims.Email)
 
 		c.Next()
 
